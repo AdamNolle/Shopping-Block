@@ -1,0 +1,144 @@
+/* content.css - Shopping Block "Think About It" Overlay */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+#shopping-block-overlay * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#shopping-block-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 2147483647; /* Max z-index to be on top of everything */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    color: #1a1a1a;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    pointer-events: all;
+    user-select: none;
+}
+
+#shopping-block-overlay.fade-in {
+    opacity: 1;
+}
+
+#shopping-block-overlay .card {
+    background: white;
+    padding: 60px 40px;
+    border-radius: 32px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    transform: translateY(20px);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#shopping-block-overlay.fade-in .card {
+    transform: translateY(0);
+}
+
+#shopping-block-overlay h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #1a1a1a;
+    line-height: 1.2;
+}
+
+#shopping-block-overlay p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+#shopping-block-overlay .countdown-btn {
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    padding: 20px 40px;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: not-allowed;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 100%;
+    display: block;
+}
+
+#shopping-block-overlay .countdown-btn.ready {
+    background: #4CAF50;
+    cursor: pointer;
+    transform: scale(1.02);
+}
+
+#shopping-block-overlay .countdown-btn.ready:hover {
+    background: #45a049;
+    transform: scale(1.05);
+}
+
+#shopping-block-overlay .countdown-btn.ready:active {
+    transform: scale(0.98);
+}
+
+#shopping-block-overlay .pill-logo {
+    display: inline-flex;
+    align-items: center;
+    background: #f7f6f2;
+    padding: 8px 16px;
+    border-radius: 50px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+#shopping-block-overlay .pill-logo img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    border-radius: 6px;
+}
+
+#shopping-block-overlay .pill-logo span {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    letter-spacing: -0.3px;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    #shopping-block-overlay {
+        background: rgba(0, 0, 0, 0.75);
+    }
+    #shopping-block-overlay .pill-logo {
+        background: #2d2d2d;
+        border-color: rgba(255,255,255,0.1);
+    }
+    #shopping-block-overlay .pill-logo span {
+        color: #fff;
+    }
+    #shopping-block-overlay .card {
+        background: #1e1e1e;
+        color: #fff;
+    }
+    #shopping-block-overlay h1 {
+        color: #fff;
+    }
+    #shopping-block-overlay p {
+        color: #aaa;
+    }
+}

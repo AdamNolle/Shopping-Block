@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shopping Block Settings</title>
+  <link rel="stylesheet" href="options.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <img src="../assets/icon.png" alt="Shopping Block Logo" class="nav-icon" />
+        Shopping Block
+      </div>
+      <p class="description">Sites in your Full Block List are closed instantly.</p>
+      <p class="description">Others will trigger a "Think About It" screen at checkout.</p>
+    </header>
+
+      <div class="global-settings-card">
+        <h3 class="category-header">Global Settings</h3>
+        <div class="setting-row">
+          <span class="domain-name">Show "Kill Switch" Toggle In Popup Menu</span>
+          <div class="toggle-group">
+            <label class="switch">
+              <input type="checkbox" id="showMasterToggleSetting">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+        <div class="setting-row">
+          <span class="domain-name">Dark Mode Appearance</span>
+          <div class="toggle-group">
+            <label class="switch">
+              <input type="checkbox" id="darkModeSetting">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+        <div class="setting-row no-border flex-column">
+          <span class="domain-name">"Think About It" Countdown Duration</span>
+          <div class="duration-grid">
+            <div class="duration-field">
+              <input type="number" id="weeksInput" min="0" placeholder="0" class="duration-input-small" />
+              <span>Weeks</span>
+            </div>
+            <div class="duration-field">
+              <input type="number" id="daysInput" min="0" placeholder="0" class="duration-input-small" />
+              <span>Days</span>
+            </div>
+            <div class="duration-field">
+              <input type="number" id="hoursInput" min="0" placeholder="0" class="duration-input-small" />
+              <span>Hours</span>
+            </div>
+            <div class="duration-field">
+              <input type="number" id="minutesInput" min="0" placeholder="0" class="duration-input-small" />
+              <span>Mins</span>
+            </div>
+            <div class="duration-field">
+              <input type="number" id="secondsInput" min="0" placeholder="0" class="duration-input-small" />
+              <span>Secs</span>
+            </div>
+          </div>
+          <button id="resetDurationBtn" class="secondary-btn-small">Reset to Zero</button>
+        </div>
+      </div>
+
+    <div class="controls-wrapper">
+
+      <div class="add-site-container">
+        <input type="text" id="customSiteInput" placeholder="Enter domain to block (e.g. example.com)" />
+        <button id="addSiteBtn">Block Site</button>
+      </div>
+
+    </div>
+
+    <div id="categoriesContainer" class="categories-container">
+      <!-- Injected by options.js -->
+    </div>
+  </div>
+
+  <script type="module" src="options.js"></script>
+</body>
+</html>
