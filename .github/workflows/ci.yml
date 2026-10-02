@@ -1,0 +1,41 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate browser extension on Adlon
+    runs-on: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && fromJSON('["self-hosted","Linux","X64","personal-ci"]') || 'ubuntu-latest' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate manifest resources
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          manifest = json.loads(Path('manifest.json').read_text(encoding='utf-8'))
+          assert manifest.get('manifest_version') in (2, 3), 'Unsupported or missing manifest_version'
+          assert manifest.get('name') and manifest.get('version'), 'Manifest name/version is required'
+          refs = []
+          refs.extend(manifest.get('icons', {}).values() if isinstance(manifest.get('icons'), dict) else [])
+          for key in ('options_page',):
+              if manifest.get(key): refs.append(manifest[key])
+          for key in ('action', 'browser_action', 'page_action', 'options_ui', 'side_panel'):
+              value = manifest.get(key, {})
+              if isinstance(value, dict): refs.extend(value.get(k) for k in ('default_popup', 'page', 'default_path') if value.get(k))
+          background = manifest.get('background', {})
+          if isinstance(background, dict):
+              refs.extend(background.get('scripts', []))
+              if background.get('service_worker'): refs.append(background['service_worker'])
+          for script in manifest.get('content_scripts', []): refs.extend(script.get('js', []) + script.get('css', []))
+          missing = [ref for ref in refs if isinstance(ref, str) and not any(ch in ref for ch in '*?') and not Path(ref).is_file()]
+          assert not missing, f'Missing manifest resources: {missing}'
+          print(f"Validated manifest v{manifest['manifest_version']} and {len(refs)} referenced resource(s)")
+          PY
+          git ls-files -z -- '*.js' -- '*.mjs' | xargs -0 -r -n1 node --check
